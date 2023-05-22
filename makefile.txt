@@ -1,0 +1,22 @@
+ASFLAGS:= -c -g --gdwarf-2
+LDFLAGS:= -static
+NAME:= lab4
+EXITFILE:= exit
+INC := defs.h
+
+
+all: Lab exit 
+
+Lab: $(NAME).s.o
+	ld $(LDAFAGS) -o $(NAME) $<
+
+$(NAME).s.o: $(NAME).s $(INC)
+	as $(ASFLAGS) -o $@ -c $<
+
+exit:
+	as $(ASFLAGS) -o $@.o -c $@.s
+	ld $(LDFLAGS) -o $@ $@.o
+
+clean:
+	rm -rf $(NAME) $(EXITFILE) *.o
+
